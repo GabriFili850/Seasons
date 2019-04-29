@@ -2,21 +2,12 @@ import React from 'react';
 import ReactDom from 'react-dom';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+    state = { lat: null, errorMessage: '' };
 
-    // THIS IS THE ONLY TIME we do a direct assignment
-    // to this.state
-    this.state = { lat: null, errorMessage: '' };
-
+  componentDidMount() {
     window.navigator.geolocation.getCurrentPosition(
-      position => {
-        //we called setState!!!
-        this.setState({ lat: position.coords.latitude });
-      },
-      err => {
-        this.setState({ errorMessage: err.message });
-      }
+      position => this.setState({ lat: position.coords.latitude }),
+      err => this.setState({ errorMessage: err.message })
     );
   }
 
@@ -31,7 +22,7 @@ class App extends React.Component {
     }
 
     return <div>Loading!</div>;
-  }
-}
+      }
+    }
 
 ReactDom.render(<App />, document.querySelector('#root'));
